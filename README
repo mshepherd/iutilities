@@ -1,0 +1,9 @@
+WHAT IS THIS MODULE FOR?
+========================
+
+This module overrides a few default behaviours:
+
+* It re-orders some of the data when node-gallery galleries get displayed. It
+  therefore depends on the node-gallery module.
+* It inserts a message into the footer of the site, which cannot then be
+  removed by a site admin.

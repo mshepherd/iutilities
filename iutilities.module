@@ -1,0 +1,50 @@
+<?php
+// $Id$
+
+function iutilities_footer($main=0) {
+  //output footer message
+  global $user;
+
+  $siteDir =   "sites/" . $_SERVER[SERVER_NAME];
+  $path = drupal_get_path('module', 'illuminate');
+  //footer message is available for all users
+  if ($user->uid == 0) {
+    $loginLink = '<a title="Login to your website, for authorised users only." href="/user/login">Login</a> to your website.';
+  } else {
+    $loginLink = '<a title="Don\'t forget to logout from your website" href="/logout">Logout</a> from your website.';
+  }
+  $illuminateStuff = '';
+  $illuminateStuff .= '<div id="ifooter-wrapper" class="ifooter-wrapper full-width">';
+  $illuminateStuff .= '  <div id="ifooter" class="ifooter row grid16-16">';
+  $illuminateStuff .= '    <div id="ifooter-inner" class="ifooter-inner inner clearfix"';
+  $illuminateStuff .= '      <p>Website developed in association with <a href="http://www.illuminateict.org.uk">Illuminate ICT</a>. ';
+  $illuminateStuff .= $loginLink;
+  $illuminateStuff .= '      </p>';
+  $illuminateStuff .= '    </div>';
+  $illuminateStuff .= '  </div>';
+  $illuminateStuff .= '</div>';
+  
+  return $illuminateStuff;
+}
+
+/*
+/ a couple of functions to change the order of fields for a gallery
+*/
+function iutilities_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  switch ($op) {
+    case 'view':
+      if (in_array($node->type, (array)node_gallery_get_types('gallery'))) {
+        $node->content['#pre_render'][] = '_iutilities_change_node_gallery_gallery_description_weight';
+        //wrap the body content in a div
+        $node->content['body']['#value'] = '<div class="gallery-body-content">' . $node->content['body']['#value'] . '</div>';
+      }
+      break;
+  }
+}
+
+function _iutilities_change_node_gallery_gallery_description_weight($element) {
+  if (isset($element['gallery'])) {
+    $element['gallery']['#weight'] = 10;
+  }
+  return $element;
+}

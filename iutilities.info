@@ -1,0 +1,5 @@
+; $Id$
+name = Illuminate utilities
+description = "Several utilities and overrides. See README ."
+core = 6.x
+dependencies[] = node_gallery
