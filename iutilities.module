@@ -37,6 +37,9 @@ function iutilities_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
         $node->content['#pre_render'][] = '_iutilities_change_node_gallery_gallery_description_weight';
         //wrap the body content in a div
         $node->content['body']['#value'] = '<div class="gallery-body-content">' . $node->content['body']['#value'] . '</div>';
+      } elseif (in_array($node->type, (array)node_gallery_get_types('image'))) {
+        //wrap the body content in a div
+        $node->content['body']['#value'] = '<div class="image-body-content">' . $node->content['body']['#value'] . '</div>';
       }
       break;
   }
